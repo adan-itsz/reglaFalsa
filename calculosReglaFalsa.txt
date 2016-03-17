@@ -1,0 +1,18 @@
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	58.0		57.0		4.66317779749354E15	-Infinity				0.0
+ 	0 	58.0		57.0		4.66317779749354E15	-Infinity				0.0
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	58.0		57.0		4.66317779749354E15	-Infinity				0.0
+ 	0 	58.0		57.0		4.66317779749354E15	-Infinity				0.0
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+iteraccion	X+		X-			X		f(x)				ER
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
+ 	0 	59.0		58.0		8.325237634488814E15	-Infinity				0.0
