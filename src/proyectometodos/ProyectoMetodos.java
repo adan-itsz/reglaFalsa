@@ -7,12 +7,13 @@ package proyectometodos;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.text.DecimalFormat;
 
 public class ProyectoMetodos {
-    double c= 18.00;//coeficiente de rozamiento
-    double g=9.81; //
-    double t=32;
-    double euler= 0.367879441;
+   // double c= 18.00;//coeficiente de rozamiento
+  //  double g=9.81; //
+   // double t=32;
+   // double euler= 0.367879441;
     double incognita;
     double a;
     double b;
@@ -22,19 +23,22 @@ public class ProyectoMetodos {
     double numeroPositivo;
     double fDeResultado;
     double relativo=0;
-    double xPrimero;
+    double cAnterior=0;
     String iteraccion;
     int suma=0;
     int itera=0;
+    int numIteraciones;
     File archivo;
     FileWriter escribir;
-    public ProyectoMetodos(double a, double b) {
-        reglaFalsa(a,b);
+    DecimalFormat decimales = new DecimalFormat("0.0000");
+    public ProyectoMetodos(double a, double b,int numIteraciones) {
+        reglaFalsa(a,b,numIteraciones);
     }
-    public void reglaFalsa(double a, double b){
+    public void reglaFalsa(double a, double b,int numIteraciones){
     this.a=a;
     this.b=b;
-    double resultado;
+    this.numIteraciones=numIteraciones;
+    double resultado=0;
     int sumaL=0;
     
     boolean bandera= false;
@@ -42,36 +46,49 @@ public class ProyectoMetodos {
     
     iteraccion= "iteraccion" + "\t" + "X+" + "\t\t" + "X-" + "\t\t\t" + "X" +"\t\t"+ "f(x)"+ "\t\t\t\t" +"ER" + "\n" ;
     guardarArchivo(iteraccion);
-    while(itera<8){//suma=0
-    fDea=(((g*a)/c)*(1-(Math.pow(euler,(-c* a)/t))));
-    fDeb=(((g*b)/c)*(1-(Math.pow(euler,(-c* b)/t))));
-    
-    resultado=((b*fDea)-(a *fDeb))/fDea-fDeb;
-    fDeResultado=(((g*resultado)/c)*(1-(Math.pow(euler,(-c* resultado)/t))));
+    while(itera<numIteraciones){//suma=0
+    fDea= ((Math.pow(a,3))-a-3);//sustitucion de funcion con valor negativo
+    fDeb=(Math.pow(b,3))-b-3;//sustitucion de funcion  con valor positivo
+  
+    resultado=((b*fDea)-(a *fDeb))/(fDea-fDeb);// igual a C
+    fDeResultado=(Math.pow(resultado, 3)-resultado - 3) ;//
     if(itera==0){
-    iteraccion= " \t"+  itera + " \t" + b + "\t\t" + a +"\t\t"+ resultado +"\t" + fDeResultado +"\t\t" + "\t\t"+relativo+"\n";
+    iteraccion= " \t"+  itera + " \t" + decimales.format(b)  + "\t\t" + decimales.format(a) +"\t\t\t"+ decimales.format(resultado) +"\t\t" + decimales.format(fDeResultado) +"\t\t" + "\t\t"+decimales.format(relativo)+"\n";
     guardarArchivo(iteraccion);
+   // itera++;
+    if(!esPositivo(fDeResultado)){
+    a=resultado;
     }
     else{
-        if(!esPositivo(fDeResultado)){
-        a=resultado;//negativo
-        }
-        else{
-        b=resultado;
-        }
-        if(bandera==false){
-        bandera=true;
-        }
-        else{
-        relativo=errorRelativo(resultado,xPrimero);
-        sumaL=numCifrasSignificativas(relativo);
-            }
+    b=resultado;
     }
-     iteraccion= " \t"+  itera + " \t" + b + "\t\t" + a +"\t\t"+ resultado +"\t" + fDeResultado +"\t\t" + "\t\t"+relativo+"\n";
+   
+    }
+    else{
+    
+        if(!esPositivo(fDeResultado)){
+          
+                a=resultado;//negativo
+           
+        }
+        else{
+           b=resultado;
+        
+        }
+    }
+        relativo=errorRelativo(resultado,cAnterior);
+    if(bandera){
+     iteraccion= " \t"+  itera + " \t" + decimales.format(b)  + "\t\t" + decimales.format(cAnterior) +"\t\t\t"+ decimales.format(resultado) +"\t\t" + decimales.format(fDeResultado) +"\t\t" + "\t\t"+decimales.format(relativo)+"\n";
     guardarArchivo(iteraccion);
     
-    itera++;
+    
     }
+    itera++;
+    cAnterior=resultado;
+    bandera=true;
+    
+    }
+    sumaL=numCifrasSignificativas(relativo);
    
     
     
@@ -81,9 +98,10 @@ public class ProyectoMetodos {
     {
         if(itera == 0){
       archivo=new File("calculosReglaFalsa.txt");
+     
+        } 
       escribir=new FileWriter(archivo,true);
-        }
-      
+       
       escribir.write(iteracion);
       escribir.close();
     }
@@ -95,8 +113,8 @@ public class ProyectoMetodos {
     
     public boolean esPositivo(double num){
     boolean positivo;
-    numeroPositivo=num - num;
-    if(numeroPositivo==0){
+    //numeroPositivo=num - (1*num);
+    if(num>0){
     positivo=true;
     }
     else {
@@ -155,7 +173,7 @@ public class ProyectoMetodos {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        new ProyectoMetodos(58,59);
+      ProyectoMetodos s=  new ProyectoMetodos(1,2,10);
     }
    
     
